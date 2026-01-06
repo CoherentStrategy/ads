@@ -1,85 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="GB12i.css">
-    <title>GB12i</title>
+<meta charset="UTF-8">
+<title>Advertisement</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        margin: 0;
+        width: 450px;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    .ad {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2571c7, #1d84cd);
+        color: white;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        animation: slideIn 0.6s ease-out;
+    }
+
+    /* animation */
+    @keyframes slideIn {
+        from {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+        margin: 8px 0 16px;
+    }
+
+    a {
+        background: white;
+        color: #016be3;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    /* close button */
+    .close {
+        position: absolute;
+        z-index: 10;
+        top: 6px;
+        right: 6px;
+        width: 24px;
+        height: 24px;
+        border: none;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.3);
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .close:hover {
+        background: rgba(0,0,0,0.5);
+    }
+</style>
 </head>
+
 <body>
+    <div class="ad">
+        <button class="close" id="closeBtn">×</button>
+        <div id="content"></div>
+    </div>
 
-<!--BEFORE GAME-->
-<div class="container" id="container">
-    <div class="form-container register">
-        <form>
-            <h2>Create Account</h2>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <button>Register</button>
-        </form>
-    </div>
-    <div class="form-container login">
-        <form>
-            <h2>Login</h2>
-            <input type="text" placeholder="Username">
-            <input type="password" placeholder="Password">
-            <a href="#" id="forgotPassword">Forgot Password?</a>
-            <button>Confirm Login</button>
-        </form>
-    </div>
-    <div class="toggle-container">
-        <div class="toggle">
-            <div class="toggle-panel toggle-right">
-                <h1>Welcome to Gamebook 12i!</h1>
-                <p>Fill in your username and password (keep it secure) and click <b>Register</b></p>
-                <br>
-                <p>Already have a account?</p>
-                <button class="hide" id="loginBtn">Login</button>
-            </div>
-            <div class="toggle-panel toggle-left">
-                <h1>Welcome Again!</h1>
-                <p>Fill in your previous username and password and click <b>Confirm Login</b></p>
-                <br>
-                <p>Don't have a account yet?</p>
-                <button class="hide" id="registerBtn">Register</button>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+let randomAd = Math.random() < 0.5 ? 
+`<a href="feminism.html" target="_blank" class="ad">
+    <h2>Want to be a Part-Time Feminist like Michael?</h2>
+    <canvas id="c" width="200" height="300"></canvas>
+    <p>Sign up now and have <b>up to 10k/month salary¹</b>  in Los Angeles (around MYR 40,565)!</p>
+    <h6>¹:Once acheived by Huenses Michael (full-time, joined since 2021) for 4 months straight in late 2025, with a total of 200+ customers!</h6>
+</a>` : 
+`<a href="feminism.html" target="_blank" class="ad">
+    <h2>Book a Feminist Now!</h2>
+    <canvas id="c" width="200" height="300"></canvas>
+    <p>Visit our website and book a session for <b>only 99.9$/hr²!</b></p>
+    <h6>²:T&C's apply, session price may differ due to SST, Transaction Fees, Discounts and Other Tax Policies</h6>
+</a>`;
 
-<!--POPUP1 (with Close button)-->
-<div id="popupOverlay1" class="hidden">
-    <div id="popupBox1">
-        <div id="popupContent1"></div>
-        <div style="text-align:right;margin-top:10px;">
-            <button onclick="closePopup1()">Close</button>
-        </div>
-    </div>
-</div>
+const adContent = document.getElementById("content");
 
-<!--POPUP2 (Custom POPUP)-->
-<div id="popupOverlay2" class="hidden">
-    <div id="popupBox2">
-        <div id="popupContent2"></div>
-    </div>
-</div>
+adContent.innerHTML = randomAd;
 
-<div id="ad-backdrop" hidden>
-    <div class="ad-popup">
-        <iframe
-        id="ad-wrapper"
-        src=""
-        width="500px"
-        height="600px"
-        sandbox="allow-scripts allow-popups allow-downloads allow-same-origin"
-        referrerpolicy="no-referrer"
-        loading="lazy"
-        frameborder="0"
-        title="Advertisement">
-        </iframe>
-    </div>
-</div>
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
+ctx.imageSmoothingEnabled = false;
 
-<script src="GB12i.js"></script>
+const randomImg = Math.random() < 0.5 ? "img/not_normal_pose.png" : "img/2.png";
+const images = ["img/Michael Jackson.png", randomImg];
+let index = 0; 
+
+const img = new Image();
+img.crossOrigin = "anonymous";
+img.src = images[index];
+
+let scale = 0.3;          // start very pixelated
+let targetScale = 0.8;     // clearer image
+let animating = true;
+
+img.onload = () => requestAnimationFrame(animate);
+
+function draw() {
+    const w = canvas.width * scale;
+    const h = canvas.height * scale;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // draw blurred image tiny
+    ctx.filter = "blur(0.6px)";
+    ctx.drawImage(img, 0, 0, w, h);
+    ctx.filter = "none";
+
+    // draw small
+    //ctx.drawImage(img, 0, 0, w, h);
+
+    // stretch back up
+    ctx.drawImage(canvas, 0, 0, w, h, 0, 0, canvas.width, canvas.height);
+}
+
+function animate() {
+    if (animating) {
+        scale += 0.002;   // 👈 animation speed (smaller = slower)
+
+        if (scale >= targetScale) {
+            scale = targetScale;
+            animating = false;
+
+            // wait 3 seconds, then switch image
+            setTimeout(switchImage, 3000);
+        }
+    }
+
+    draw();
+    requestAnimationFrame(animate);
+}
+
+function switchImage() {
+    index = (index + 1) % images.length;
+    img.src = images[index];
+
+    // reset animation
+    scale = 0.25;
+    animating = true;
+}
+document.getElementById("closeBtn").addEventListener("click", () => {
+    parent.postMessage({ type: "close-ad" }, "*");
+});
+</script>
 </body>
 </html>
