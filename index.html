@@ -91,14 +91,15 @@
     </div>
 
 <script>
+location.reload();
 let randomAd = Math.random() < 0.5 ? 
-`<a href="http://feminism.book.com/" target="_blank" class="ad">
+`<a href="https://coherentstrategy.github.io/feminism/" target="_blank" class="ad">
     <h2>Want to be a Part-Time Feminist like Michael?</h2>
     <canvas id="c" width="200" height="300"></canvas>
     <p>Sign up now and have <b>up to 10k/month salary¹</b>  in Los Angeles (around MYR 40,565)!</p>
     <h6>¹:Once acheived by Huenses Michael (full-time, joined since 2021) for 4 months straight in late 2025, with a total of 200+ customers!</h6>
 </a>` : 
-`<a href="http://feminism.book.com/" target="_blank" class="ad">
+`<a href="https://coherentstrategy.github.io/feminism" target="_blank" class="ad">
     <h2>Book a Feminist Now!</h2>
     <canvas id="c" width="200" height="300"></canvas>
     <p>Visit our website and book a session for <b>only 99.9$/hr²!</b></p>
@@ -113,7 +114,7 @@ const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
-const randomImg = Math.random() < 0.5 ? "img/not_normal_pose.png" : "img/2.png";
+let randomImg = Math.random() < 0.5 ? "img/not_normal_pose.png" : "img/2.png";
 const images = ["img/Michael Jackson.png", randomImg];
 let index = 0; 
 
