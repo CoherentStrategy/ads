@@ -114,7 +114,17 @@ const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
-let randomImg = Math.random() < 0.5 ? "img/not_normal_pose.png" : "img/2.png";
+const imgs = ["img/2.png", "img/not_normal_pose.png","img/walking-pose.png"];
+function getRandom(arr) {
+  // Check if the array is empty to prevent errors
+  if (arr.length === 0) {
+    return null;
+  }
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+}
+
+let randomImg = getRandom(imgs);
 const images = ["img/Michael Jackson.png", randomImg];
 let index = 0; 
 
