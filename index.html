@@ -113,7 +113,7 @@ const canvas = document.getElementById("c");
 const ctx = canvas.getContext("2d");
 ctx.imageSmoothingEnabled = false;
 
-const imgs = ["img/2.png", "img/not_normal_pose.png","img/pose.png"];
+const aImgs = ["img/2.png", "img/not_normal_pose.png","img/walking_pose.png"];
 function getRandom(arr) {
   // Check if the array is empty to prevent errors
   if (arr.length === 0) {
@@ -123,8 +123,8 @@ function getRandom(arr) {
   return arr[randomIndex];
 }
 
-let randomImg = getRandom(imgs);
-const images = ["img/Michael Jackson.png", randomImg];
+let randomAImg = getRandom(aImgs);
+const images = ["img/Michael Jackson.png", randomAImg];
 let index = 0; 
 
 const img = new Image();
@@ -157,7 +157,7 @@ function draw() {
 
 function animate() {
     if (animating) {
-        scale += 0.002;   // 👈 animation speed (smaller = slower)
+        scale += 0.002;   // animation speed (smaller = slower)
 
         if (scale >= targetScale) {
             scale = targetScale;
